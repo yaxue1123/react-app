@@ -6,11 +6,21 @@ class Counter extends Component {
     tags: ["tag1", "tag2", "tag3"]
   };
 
+  // can replace arrow function to bind event handlers.
+  //   constructor() {
+  //     super();
+  //     this.handleIncrement = this.handleIncrement.bind(this);
+  //   }
+
   renderTags() {
     if (this.state.tags.length === 0) return <p>No tag</p>;
 
     return this.state.tags.map(tag => <li key={tag}>{tag}</li>);
   }
+
+  handleIncrement = () => {
+    console.log(this);
+  };
 
   render() {
     let classes = this.getBadgeClasses();
@@ -18,7 +28,12 @@ class Counter extends Component {
     return (
       <React.Fragment>
         <span className={classes}>{this.formatCount()}</span>
-        <button className="btn btn-secondary btn-sm">Increment</button>
+        <button
+          onClick={this.handleIncrement}
+          className="btn btn-secondary btn-sm"
+        >
+          Increment
+        </button>
         {this.state.tags.length === 0 && "Please create a new tag!"}
         <ul>{this.renderTags()}</ul>
       </React.Fragment>
