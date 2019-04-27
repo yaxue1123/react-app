@@ -18,8 +18,9 @@ class Counter extends Component {
     return this.state.tags.map(tag => <li key={tag}>{tag}</li>);
   }
 
-  handleIncrement = () => {
-    console.log(this);
+  handleIncrement = product => {
+    console.log(product);
+    this.setState({ count: this.state.count + 1 });
   };
 
   render() {
@@ -29,7 +30,7 @@ class Counter extends Component {
       <React.Fragment>
         <span className={classes}>{this.formatCount()}</span>
         <button
-          onClick={this.handleIncrement}
+          onClick={() => this.handleIncrement({ id: 1 })}
           className="btn btn-secondary btn-sm"
         >
           Increment
