@@ -2,7 +2,7 @@ import React, { Component } from "react";
 
 class Counter extends Component {
   state = {
-    value: this.props.value
+    value: this.props.counter.value
   };
 
   // can replace arrow function to bind event handlers.
@@ -24,16 +24,20 @@ class Counter extends Component {
 
   render() {
     let classes = this.getBadgeClasses();
-    console.log(this.props);
     return (
       <React.Fragment>
-        {this.props.children}
         <span className={classes}>{this.formatCount()}</span>
         <button
           onClick={() => this.handleIncrement({ id: 1 })}
           className="btn btn-secondary btn-sm"
         >
           Increment
+        </button>
+        <button
+          onClick={() => this.props.onDelete(this.props.counter.id)}
+          className="btn btn-danger sm m-2"
+        >
+          Delete
         </button>
         <br />
         {/* {this.state.tags.length === 0 && "Please create a new tag!"}
