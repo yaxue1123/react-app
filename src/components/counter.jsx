@@ -1,24 +1,7 @@
 import React, { Component } from "react";
 
 class Counter extends Component {
-  // a lifecycle hook method.
-  componentDidUpdate(prevProps, prevState) {
-    // console.log("prevProps", prevProps);
-    // console.log("prevState", prevState);
-
-    if (prevProps.counter.value !== this.props.counter.value) {
-      // Ajax call and get new data from the server.
-      // if no change then no need for ajax call.
-      // optimization technique.
-    }
-  }
-
-  componentWillUnmount() {
-    console.log("Counter - Unmount");
-  }
-
   render() {
-    console.log("Counter - Rendered");
     let classes = this.getBadgeClasses();
     return (
       <div className="row">
@@ -35,6 +18,7 @@ class Counter extends Component {
           <button
             onClick={() => this.props.onDecrement(this.props.counter)}
             className="btn btn-secondary btn-sm m-2"
+            disabled={this.props.counter.value === 0 ? "diabled" : ""}
           >
             -
           </button>

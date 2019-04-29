@@ -4,7 +4,6 @@ import Counter from "./counter";
 
 class Counters extends Component {
   render() {
-    console.log("Counters - Rendered");
     // use object destructuring to simplify the code.
     const {
       onReset,

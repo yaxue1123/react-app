@@ -13,19 +13,6 @@ class App extends Component {
     ]
   };
 
-  // 1st life cycle hook method in the mount phase.
-  constructor(props) {
-    super(props);
-    console.log("APP - constructor", this.props);
-  }
-
-  // 2nd: after the component is rendered.
-  componentDidMount() {
-    // Ajax call.
-    // this.setState({});
-    console.log("APP - mounted");
-  }
-
   handleReset = () => {
     const counters = this.state.counters.map(c => {
       c.value = 0;
@@ -60,7 +47,6 @@ class App extends Component {
   };
 
   render() {
-    console.log("APP - rendered");
     return (
       <React.Fragment>
         <NavBar
