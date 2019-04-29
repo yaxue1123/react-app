@@ -1,44 +1,51 @@
 import React, { Component } from "react";
 
 class Counter extends Component {
-  // stateless component/ controlled component
-  // state = {
-  //   value: this.props.counter.value
-  // };
+  // a lifecycle hook method.
+  componentDidUpdate(prevProps, prevState) {
+    // console.log("prevProps", prevProps);
+    // console.log("prevState", prevState);
 
-  // can replace arrow function to bind event handlers.
-  //   constructor() {
-  //     super();
-  //     this.handleIncrement = this.handleIncrement.bind(this);
-  //   }
+    if (prevProps.counter.value !== this.props.counter.value) {
+      // Ajax call and get new data from the server.
+      // if no change then no need for ajax call.
+      // optimization technique.
+    }
+  }
 
-  // renderTags() {
-  //   if (this.state.tags.length === 0) return <p>No tag</p>;
-
-  //   return this.state.tags.map(tag => <li key={tag}>{tag}</li>);
-  // }
+  componentWillUnmount() {
+    console.log("Counter - Unmount");
+  }
 
   render() {
+    console.log("Counter - Rendered");
     let classes = this.getBadgeClasses();
     return (
-      <React.Fragment>
-        <span className={classes}>{this.formatCount()}</span>
-        <button
-          onClick={() => this.props.onIncrement(this.props.counter)}
-          className="btn btn-secondary btn-sm"
-        >
-          Increment
-        </button>
-        <button
-          onClick={() => this.props.onDelete(this.props.counter.id)}
-          className="btn btn-danger sm m-2"
-        >
-          Delete
-        </button>
-        <br />
-        {/* {this.state.tags.length === 0 && "Please create a new tag!"}
-        <ul>{this.renderTags()}</ul> */}
-      </React.Fragment>
+      <div className="row">
+        <div className="col-1">
+          <span className={classes}>{this.formatCount()}</span>
+        </div>
+        <div className="col">
+          <button
+            onClick={() => this.props.onIncrement(this.props.counter)}
+            className="btn btn-secondary btn-sm"
+          >
+            +
+          </button>
+          <button
+            onClick={() => this.props.onDecrement(this.props.counter)}
+            className="btn btn-secondary btn-sm m-2"
+          >
+            -
+          </button>
+          <button
+            onClick={() => this.props.onDelete(this.props.counter.id)}
+            className="btn btn-danger btn-sm"
+          >
+            x
+          </button>
+        </div>
+      </div>
     );
   }
 

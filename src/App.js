@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import Navbar from "./components/navbar";
+import NavBar from "./components/navbar";
 import Counters from "./components/counters";
 import "./App.css";
 
@@ -12,6 +12,19 @@ class App extends Component {
       { id: 4, value: 0 }
     ]
   };
+
+  // 1st life cycle hook method in the mount phase.
+  constructor(props) {
+    super(props);
+    console.log("APP - constructor", this.props);
+  }
+
+  // 2nd: after the component is rendered.
+  componentDidMount() {
+    // Ajax call.
+    // this.setState({});
+    console.log("APP - mounted");
+  }
 
   handleReset = () => {
     const counters = this.state.counters.map(c => {
@@ -38,10 +51,19 @@ class App extends Component {
     this.setState({ counters });
   };
 
+  handleDecrement = counter => {
+    const counters = [...this.state.counters];
+    const index = counters.indexOf(counter);
+    counters[index] = { ...counter };
+    counters[index].value--;
+    this.setState({ counters });
+  };
+
   render() {
+    console.log("APP - rendered");
     return (
       <React.Fragment>
-        <Navbar
+        <NavBar
           totalCounters={this.state.counters.filter(c => c.value > 0).length}
         />
         <main className="container">
@@ -50,6 +72,7 @@ class App extends Component {
             onReset={this.handleReset}
             onDelete={this.handleDelete}
             onIncrement={this.handleIncrement}
+            onDecrement={this.handleDecrement}
           />
         </main>
       </React.Fragment>
