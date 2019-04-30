@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import Like from "./common/like";
 import { getMovies } from "../services/fakeMovieService";
 
 class Movies extends Component {
@@ -14,6 +15,14 @@ class Movies extends Component {
     });
     // new movies obj will overwrite old one in state
     this.setState({ movies: movies });
+  };
+
+  handleLike = movie => {
+    const movies = [...this.state.movies];
+    const index = movies.indexOf(movie);
+    movies[index] = { ...movies[index] };
+    movies[index].liked = !movies[index].liked;
+    this.setState({ movies });
   };
 
   render() {
@@ -33,6 +42,7 @@ class Movies extends Component {
               <th>Stock</th>
               <th>Rate</th>
               <th />
+              <th />
             </tr>
           </thead>
           <tbody>
@@ -42,6 +52,12 @@ class Movies extends Component {
                 <td>{movie.genre.name}</td>
                 <td>{movie.numberInStock}</td>
                 <td>{movie.dailyRentalRate}</td>
+                <td>
+                  <Like
+                    liked={movie.liked}
+                    onClick={() => this.handleLike(movie)}
+                  />
+                </td>
                 <td>
                   <button
                     onClick={() => this.handleDelete(movie)}
