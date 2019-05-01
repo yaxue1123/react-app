@@ -47,19 +47,7 @@ class Movies extends Component {
     this.setState({ selectedGenre: genre, currentPage: 1 });
   };
 
-  handleSort = path => {
-    const sortColumn = { ...this.state.sortColumn };
-
-    // click twice on the same col to reverse sorting.
-    // click the first time will ascend at default.
-    if (sortColumn.path === path) {
-      sortColumn.order = sortColumn.order === "asc" ? "desc" : "asc";
-    } else {
-      sortColumn.path = path;
-      sortColumn.order = "asc";
-    }
-
-    // set state based on the new sortColumn object.
+  handleSort = sortColumn => {
     this.setState({ sortColumn });
   };
 
@@ -100,6 +88,7 @@ class Movies extends Component {
           <p>Showing {filtered.length} movies in the database.</p>
           <MoviesTable
             movies={movies}
+            sortColumn={sortColumn}
             onLike={this.handleLike}
             onDelete={this.handleDelete}
             onSort={this.handleSort}
