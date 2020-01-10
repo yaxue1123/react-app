@@ -2,11 +2,37 @@ import React, { Component } from "react";
 import Input from './common/input';
 
 class LoginForm extends Component {
-  state = { account: { username: "", password: "" } };
+  state = { 
+    account: { username: "", password: "" },
+    errors: {},
+  };
+
+  validate= () => {
+    const errors = {};
+    const { account } = this.state;
+
+    if (this.state.account.username.trim() === '') {
+      errors.username = 'Username is required.';
+    }
+
+    if (this.state.account.password.trim() === '') {
+      errors.password = 'Password is required.';
+    }
+
+    return Object.keys(errors).length === 0 ? null : errors;
+  }
 
   handleSubmit = e => {
     // Prevent page reload.
     e.preventDefault();
+    
+    const errors = this.validate();
+
+    console.log(errors);
+
+    this.setState({ errors });
+    if (errors) return;
+
     // Call the server.
     console.log("submitted");
   };
@@ -38,7 +64,7 @@ class LoginForm extends Component {
           <button className="btn btn-primary">Login</button>
         </form>
       </div>
-    );
+    ); 
   }
 }
 
