@@ -71,12 +71,28 @@ class Form extends Component {
 
     renderInput(name, label, type = "text") {
         const { data, errors } = this.state;
+
         return (
             <Input 
                 type={type}
                 name={name}
                 value={data[name]} 
                 label={label}
+                onChange={this.handleChange}
+                error={errors[name]}
+            />
+        );
+    }
+
+    renderSelect(name, label, options) {
+        const { data, errors } = this.state;
+
+        return (
+            <Input 
+                name={name}
+                value={data[name]} 
+                label={label}
+                options={options}
                 onChange={this.handleChange}
                 error={errors[name]}
             />
