@@ -1,13 +1,15 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import toast from "react-toastify";
 import Pagination from "./common/pagination";
 import ListGroup from "./common/listGroup";
 import MoviesTable from "./moviesTable";
-import { getMovies } from "../services/fakeMovieService";
+import { getMovies } from "../services/movieService";
 import { getGenres } from "../services/genreService";
 import paginate from "../utils/paginate";
 import _ from "lodash";
 import SearchBox from "./searchBox";
+import { deleteMovie } from "../services/movieService";
 
 class Movies extends Component {
   state = {
@@ -23,17 +25,32 @@ class Movies extends Component {
   async componentDidMount() {
     const { data } = await getGenres();
     const genres = [{ _id: "", name: "All Genres" }, ...data];
-    this.setState({ movies: getMovies(), genres });
+
+    const { data: movies } = await getMovies();
+
+    this.setState({ movies, genres });
   }
 
-  handleDelete = movie => {
+  handleDelete = async movie => {
+    const originalMovies = this.state.movies;
     // update the state of the component.
     // create a new movies array without current selected movie.
-    const movies = this.state.movies.filter(m => {
+    const movies = originalMovies.filter(m => {
       return m._id !== movie._id;
     });
+
     // new movies obj will overwrite old one in state
     this.setState({ movies: movies });
+
+    try {
+      await deleteMovie(movie._id);
+    }
+    catch (ex) {
+      if (ex.response && ex.response.status === 404)
+        toast.error('This movie has already been deleted');
+    }
+
+    this.setState({ movies: originalMovies });
   };
 
   handleLike = movie => {
