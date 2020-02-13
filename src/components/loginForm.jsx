@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Joi from 'joi-browser';
 import Form from './common/form';
-import { login } from '../services/authService';
+import auth from '../services/authService';
 
 class LoginForm extends Form {
   state = { 
@@ -18,9 +18,9 @@ class LoginForm extends Form {
     try {
       const { data } = this.state;
       // get json web token.
-      const { data: jwt } = await login(data.username, data.password);
+      await auth.login(data.username, data.password);
       // store in local storage.
-      localStorage.setItem('token', jwt);
+      // localStorage.setItem('token', jwt);
       // redirect the user to homepage.
       // do a full reload of page in order to mount the app
       // state upated with user info decoded by jwt.
