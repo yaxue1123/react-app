@@ -22,7 +22,10 @@ class LoginForm extends Form {
       // store in local storage.
       localStorage.setItem('token', jwt);
       // redirect the user to homepage.
-      this.props.history.push('/');
+      // do a full reload of page in order to mount the app
+      // state upated with user info decoded by jwt.
+      // this.props.history.push('/');
+      window.location = "/";
     }
     catch(ex) {
       if(ex.response && ex.response.status === 400) {
