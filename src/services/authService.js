@@ -3,25 +3,26 @@ import http from './httpService';
 import { apiUrl } from '../config.json';
 
 const apiEndpoint = apiUrl + '/auth';
+const tokenKey = 'token';
 
 export async function login(email, password) {
     const { data: jwt } = await http.post(apiEndpoint, {email, password});
-    localStorage.setItem('token', jwt);
+    localStorage.setItem(tokenKey, jwt);
 }
 
 // for register form.
 // after register, auto login with the jwt.
 export function loginWithJwt(jwt) {
-    localStorage.setItem("token", jwt);
+    localStorage.setItem(tokenKey, jwt);
 }
 
 export function logout() {
-    localStorage.removeItem('token');
+    localStorage.removeItem(tokenKey);
 }
 
 export function getCurrentUser() {
     try {
-        const jwt = localStorage.getItem("token");
+        const jwt = localStorage.getItem(tokenKey);
         // return the user.
         return  jwtDecode(jwt);
       }
@@ -33,9 +34,14 @@ export function getCurrentUser() {
       }
 }
 
+export function getJwt(){
+    return localStorage.getItem(tokenKey);
+}
+
 export default {
     login,
     loginWithJwt,
     logout,
     getCurrentUser,
+    getJwt,
 }
