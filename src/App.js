@@ -23,16 +23,24 @@ class App extends Component {
   }
 
   render() {
+    const {user} = this.state;
+
     return (
       <React.Fragment>
         <ToastContainer />
-        <MainNav user={this.state.user} />
+        <MainNav user={user} />
         <main className="container">
           <Switch>
             <Route path="/registerForm" component={registerForm} />
             <Route path="/loginForm" component={LoginForm} />
             <Route path="/logout" component={Logout} />
-            <Route path="/movies/:id" component={MovieForm} />
+            <Route 
+              path="/movies/:id" 
+              render={props => { 
+                if (!user) return <Redirect to="/loginForm" />;
+                return <MovieForm {...props} />
+              }} 
+            />
             <Route 
               path="/movies" 
               render={props => <Movies {...props} user={this.state.user}/>} 
