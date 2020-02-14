@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import  { Redirect } from 'react-router-dom';
 import Joi from 'joi-browser';
 import Form from './common/form';
 import auth from '../services/authService';
@@ -25,7 +26,8 @@ class LoginForm extends Form {
       // do a full reload of page in order to mount the app
       // state upated with user info decoded by jwt.
       // this.props.history.push('/');
-      window.location = "/";
+      const { state } = this.props.location;
+      window.location = state ? state.from.pathname : "/";
     }
     catch(ex) {
       if(ex.response && ex.response.status === 400) {
@@ -37,6 +39,8 @@ class LoginForm extends Form {
   }
 
   render() {
+    if (auth.getCurrentUser()) return <Redirect to="/"/>;
+
     return (
       <div>
         <h1>Log in</h1>
